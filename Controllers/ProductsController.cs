@@ -10,6 +10,7 @@ using ControlInventario.Models;
 
 namespace ControlInventario.Controllers
 {
+    [Authorize]
     public class ProductsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -23,7 +24,7 @@ namespace ControlInventario.Controllers
 
         // GET: Products/Details/5
         public ActionResult Details(int? id)
-        {
+        {   
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -118,6 +119,11 @@ namespace ControlInventario.Controllers
             db.Products.Remove(products);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+        public ActionResult ProductBySupplier(int supplierId)
+        {
+            var products = db.Products.Where(p => p.SupplierId== supplierId).ToList();
+            return View(products);
         }
 
         protected override void Dispose(bool disposing)

@@ -10,6 +10,7 @@ using ControlInventario.Models;
 
 namespace ControlInventario.Controllers
 {
+    [Authorize]
     public class SuppliersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -36,6 +37,7 @@ namespace ControlInventario.Controllers
         }
 
         // GET: Suppliers/Create
+        [HttpGet]
         public ActionResult Create()
         {
             return View();
@@ -46,7 +48,7 @@ namespace ControlInventario.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,SupplierCode,SupplierName,Email,Phone,Adress")] Supplier supplier)
+        public ActionResult Create( Supplier supplier)
         {
             if (ModelState.IsValid)
             {
